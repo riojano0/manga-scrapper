@@ -2,6 +2,8 @@ import os
 import cfscrape
 from BeautifulSoup import *
 
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+
 
 def main():
     print ("######################################################")
@@ -14,7 +16,6 @@ def main():
         url = raw_input('-------------------\nEnter chapter url: ')
         if len(url) < 1: break
         http, empty, page, string, serie, chapter = url.split("/")
-        SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 
         scrape = cfscrape.create_scraper()
         html = scrape.get(url).content
@@ -23,7 +24,7 @@ def main():
         image_list = [tag.findAll('img') for tag in soup.findAll('div', id="vungdoc")]
 
         def download_image(image_response, image_number):
-            path_directory = "{}/Downloads/{}/{}/".format(SCRIPT_DIR, serie, chapter, )
+            path_directory = "{}/Downloads/{}/{}/".format(SCRIPT_DIR, serie, chapter)
             file_name = "{}.png".format("img-" + "%03d" % (image_number,))
             if image_response.status_code == 200:
                 if not os.path.exists(path_directory):
@@ -33,8 +34,10 @@ def main():
                         out_file.write(data)
                     print path_directory
                     print file_name
+            else:
+                print image_response.status_code
 
-        counter = 1;
+        counter = 0;
         for img in image_list[0]:
             download_image(scrape.get(img['src']), counter)
             counter += 1

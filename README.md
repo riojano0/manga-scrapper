@@ -15,7 +15,7 @@ Small Python scripts to download chapters from manganelo/mangakakalot and tuMang
 
 For **Mangakalot/Manganelo**
 
-    python mangakalot-scrapper.py
+    python mangakakalot-scrapper.py
 ```input type example: http://manganelo.com/chapter/yakusoku_no_neverland/chapter_2``` 
     
 For **TuMangaOnline**
